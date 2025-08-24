@@ -4,6 +4,28 @@ from unalix import unshort_url
 
 app = Flask(__name__)
 
+@app.route("/")
+def home():
+    return jsonify({
+        "message": "Welcome to the Map Link Locator API 🚀",
+        "usage": {
+            "/extract-address": "POST request with JSON { 'url': '<your-map-link>' } to extract address from a Google Maps link.",
+            "/geocode": "POST request with JSON { 'address': '<your-address>' } to get latitude & longitude using Nominatim."
+        },
+        "example_requests": {
+            "extract_address": {
+                "method": "POST",
+                "url": "/extract-address",
+                "body": {"url": "https://maps.app.goo.gl/3hdtkUmC98GErN2k6"}
+            },
+            "geocode": {
+                "method": "POST",
+                "url": "/geocode",
+                "body": {"address": "New Delhi, India"}
+            }
+        }
+    })
+
 # Route to resolve Google Maps short links and get address using Nominatim
 @app.route("/resolve", methods=["POST"])
 def resolve_map_link():
